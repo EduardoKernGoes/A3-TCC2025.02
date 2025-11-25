@@ -6,7 +6,7 @@
 
 
 @SuppressWarnings("fallthrough")
-class Yylex {
+class Lexer {
 
   /** This character denotes the end of file. */
   public static final int YYEOF = -1;
@@ -33,7 +33,7 @@ class Yylex {
   private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
 
   private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\u10ff\u0100";
+    "\1\0\25\u0100\1\u0200\11\u0100\1\u0300\17\u0100\1\u0400\u10cf\u0100";
 
   private static int [] zzUnpackcmap_top() {
     int [] result = new int[4352];
@@ -61,12 +61,14 @@ class Yylex {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\50\0\1\1\1\2\2\0\1\3\2\0\1\4\12\5"+
-    "\1\0\1\6\46\0\1\7\4\0\1\10\6\0\1\4"+
-    "\3\0\1\11\1\0\1\4\u018b\0";
+    "\11\0\5\1\22\0\1\1\7\0\1\2\1\3\2\0"+
+    "\1\4\3\0\12\5\1\0\1\6\46\0\1\7\4\0"+
+    "\1\10\12\0\1\11\22\0\1\1\32\0\1\1\u01df\0"+
+    "\1\1\177\0\13\1\35\0\2\1\5\0\1\1\57\0"+
+    "\1\1\240\0\1\1\377\0";
 
   private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[512];
+    int [] result = new int[1280];
     int offset = 0;
     offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
     return result;
@@ -91,7 +93,7 @@ class Yylex {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7"+
-    "\1\5\1\0\1\10";
+    "\1\1\1\0\1\10";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[11];
@@ -119,7 +121,7 @@ class Yylex {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\12\0\12\0\12\0\12\0\24\0\36\0\12"+
+    "\0\0\0\12\0\24\0\12\0\12\0\12\0\36\0\12"+
     "\0\50\0\62\0\12";
 
   private static int [] zzUnpackRowMap() {
@@ -147,8 +149,8 @@ class Yylex {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\2"+
-    "\1\11\16\0\1\6\4\0\1\6\5\0\1\7\10\0"+
-    "\1\6\3\0\1\12\1\6\7\0\1\13\2\0";
+    "\1\11\13\0\1\3\15\0\1\7\14\0\1\12\10\0"+
+    "\1\13\2\0";
 
   private static int [] zzUnpacktrans() {
     int [] result = new int[60];
@@ -194,7 +196,8 @@ class Yylex {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\4\11\2\1\1\11\1\1\1\0\1\11";
+    "\1\0\1\11\1\1\3\11\1\1\1\11\1\1\1\0"+
+    "\1\11";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[11];
@@ -280,7 +283,7 @@ class Yylex {
    *
    * @param   in  the java.io.Reader to read input from.
    */
-  Yylex(java.io.Reader in) {
+  Lexer(java.io.Reader in) {
     this.zzReader = in;
   }
 
@@ -691,27 +694,27 @@ class Yylex {
           // fall through
           case 9: break;
           case 2:
-            { System.out.println("Simbulo (");
+            { /*IGNORAR */
             }
           // fall through
           case 10: break;
           case 3:
-            { System.out.println("Simbulo )");
+            { System.out.println("Simbulo (");
             }
           // fall through
           case 11: break;
           case 4:
-            { System.out.println("Simbulo ,");
+            { System.out.println("Simbulo )");
             }
           // fall through
           case 12: break;
           case 5:
-            { /*IGNORAR */
+            { System.out.println("Simbulo ,");
             }
           // fall through
           case 13: break;
           case 6:
-            { System.out.println("Red: " + yytext());
+            { System.out.println("Num: " + yytext());
             }
           // fall through
           case 14: break;
@@ -743,7 +746,7 @@ class Yylex {
    */
   public static void main(String[] argv) {
     if (argv.length == 0) {
-      System.out.println("Usage : java Yylex [ --encoding <name> ] <inputfile(s)>");
+      System.out.println("Usage : java Lexer [ --encoding <name> ] <inputfile(s)>");
     }
     else {
       int firstFilePos = 0;
@@ -760,13 +763,13 @@ class Yylex {
         }
       }
       for (int i = firstFilePos; i < argv.length; i++) {
-        Yylex scanner = null;
+        Lexer scanner = null;
         java.io.FileInputStream stream = null;
         java.io.Reader reader = null;
         try {
           stream = new java.io.FileInputStream(argv[i]);
           reader = new java.io.InputStreamReader(stream, encodingName);
-          scanner = new Yylex(reader);
+          scanner = new Lexer(reader);
           while ( !scanner.zzAtEOF ) scanner.yylex();
         }
         catch (java.io.FileNotFoundException e) {

@@ -6,7 +6,7 @@
 
 
 @SuppressWarnings("fallthrough")
-class Yylex {
+class Lexer {
 
   /** This character denotes the end of file. */
   public static final int YYEOF = -1;
@@ -280,7 +280,7 @@ class Yylex {
    *
    * @param   in  the java.io.Reader to read input from.
    */
-  Yylex(java.io.Reader in) {
+  Lexer(java.io.Reader in) {
     this.zzReader = in;
   }
 
@@ -711,7 +711,7 @@ class Yylex {
           // fall through
           case 13: break;
           case 6:
-            { System.out.println("Red: " + yytext());
+            { System.out.println("Num: " + yytext());
             }
           // fall through
           case 14: break;
@@ -743,7 +743,7 @@ class Yylex {
    */
   public static void main(String[] argv) {
     if (argv.length == 0) {
-      System.out.println("Usage : java Yylex [ --encoding <name> ] <inputfile(s)>");
+      System.out.println("Usage : java Lexer [ --encoding <name> ] <inputfile(s)>");
     }
     else {
       int firstFilePos = 0;
@@ -760,13 +760,13 @@ class Yylex {
         }
       }
       for (int i = firstFilePos; i < argv.length; i++) {
-        Yylex scanner = null;
+        Lexer scanner = null;
         java.io.FileInputStream stream = null;
         java.io.Reader reader = null;
         try {
           stream = new java.io.FileInputStream(argv[i]);
           reader = new java.io.InputStreamReader(stream, encodingName);
-          scanner = new Yylex(reader);
+          scanner = new Lexer(reader);
           while ( !scanner.zzAtEOF ) scanner.yylex();
         }
         catch (java.io.FileNotFoundException e) {

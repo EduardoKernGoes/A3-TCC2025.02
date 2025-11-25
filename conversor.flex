@@ -3,6 +3,7 @@
 %%
 
 %standalone
+%class Lexer
 %unicode
 %line
 %column
@@ -17,6 +18,6 @@ NUMBER = {DIGIT}+
 "," {System.out.println("Simbulo ,");}
 ")" {System.out.println("Simbulo )");}
 ";" {System.out.println("Simbulo ;");}
-{NUMBER} {System.out.println("Red: " + yytext());}
+{NUMBER} {System.out.println("Num: " + yytext());}
 
-[/t/r/n]+ {/*IGNORAR */}
+\s+ {/*IGNORAR */}
