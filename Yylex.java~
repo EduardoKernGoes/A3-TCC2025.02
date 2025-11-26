@@ -3,10 +3,8 @@
 // source: conversor.flex
 
 
-
-
 @SuppressWarnings("fallthrough")
-class Yylex {
+class Yylex implements java_cup.runtime.Scanner, java_cup.runtime.Scanner {
 
   /** This character denotes the end of file. */
   public static final int YYEOF = -1;
@@ -33,7 +31,8 @@ class Yylex {
   private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
 
   private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\u10ff\u0100";
+    "\1\0\25\u0100\1\u0200\11\u0100\1\u0300\17\u0100\1\u0400\247\u0100"+
+    "\10\u0500\u1020\u0100";
 
   private static int [] zzUnpackcmap_top() {
     int [] result = new int[4352];
@@ -61,12 +60,14 @@ class Yylex {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\50\0\1\1\1\2\2\0\1\3\2\0\1\4\12\5"+
-    "\1\0\1\6\46\0\1\7\4\0\1\10\6\0\1\4"+
-    "\3\0\1\11\1\0\1\4\u018b\0";
+    "\11\0\5\1\22\0\1\1\7\0\1\2\1\3\2\0"+
+    "\1\4\3\0\12\5\1\0\1\6\46\0\1\7\4\0"+
+    "\1\10\12\0\1\11\22\0\1\1\32\0\1\1\u01df\0"+
+    "\1\1\177\0\13\1\35\0\2\1\5\0\1\1\57\0"+
+    "\1\1\240\0\1\1\377\0\u0100\12";
 
   private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[512];
+    int [] result = new int[1536];
     int offset = 0;
     offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
     return result;
@@ -91,7 +92,7 @@ class Yylex {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7"+
-    "\1\5\1\0\1\10";
+    "\1\1\1\0\1\10";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[11];
@@ -119,8 +120,8 @@ class Yylex {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\12\0\12\0\12\0\12\0\24\0\36\0\12"+
-    "\0\50\0\62\0\12";
+    "\0\0\0\13\0\26\0\13\0\13\0\13\0\41\0\13"+
+    "\0\54\0\67\0\13";
 
   private static int [] zzUnpackRowMap() {
     int [] result = new int[11];
@@ -147,11 +148,11 @@ class Yylex {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\2"+
-    "\1\11\16\0\1\6\4\0\1\6\5\0\1\7\10\0"+
-    "\1\6\3\0\1\12\1\6\7\0\1\13\2\0";
+    "\1\11\15\0\1\3\16\0\1\7\15\0\1\12\11\0"+
+    "\1\13\3\0";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[60];
+    int [] result = new int[66];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -194,7 +195,8 @@ class Yylex {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\4\11\2\1\1\11\1\1\1\0\1\11";
+    "\1\0\1\11\1\1\3\11\1\1\1\11\1\1\1\0"+
+    "\1\11";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[11];
@@ -271,7 +273,6 @@ class Yylex {
   private boolean zzAtBOL = true;
 
   /** Whether the user-EOF-code has already been executed. */
-  @SuppressWarnings("unused")
   private boolean zzEOFDone;
 
 
@@ -535,6 +536,18 @@ class Yylex {
   }
 
 
+  /**
+   * Contains user EOF-code, which will be executed exactly once,
+   * when the end of file is reached
+   */
+  private void zzDoEOF() throws java.io.IOException {
+    if (!zzEOFDone) {
+      zzEOFDone = true;
+    
+  yyclose();    }
+  }
+
+
 
 
   /**
@@ -544,7 +557,7 @@ class Yylex {
    * @return the next token.
    * @exception java.io.IOException if any I/O-Error occurs.
    */
-  public int yylex() throws java.io.IOException
+  @Override  public java_cup.runtime.Symbol next_token() throws java.io.IOException
   {
     int zzInput;
     int zzAction;
@@ -681,124 +694,53 @@ class Yylex {
 
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
-        return YYEOF;
+            zzDoEOF();
+          { return new java_cup.runtime.Symbol(sym.EOF); }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { System.out.print(yytext());
+            { System.out.println("ERRO: caractere inválido: " + yytext());
             }
           // fall through
           case 9: break;
           case 2:
-            { System.out.println("Simbulo (");
+            { /* ignorar */
             }
           // fall through
           case 10: break;
           case 3:
-            { System.out.println("Simbulo )");
+            { return sym.LPAREN;
             }
           // fall through
           case 11: break;
           case 4:
-            { System.out.println("Simbulo ,");
+            { return sym.RPAREN;
             }
           // fall through
           case 12: break;
           case 5:
-            { /*IGNORAR */
+            { return sym.COMMA;
             }
           // fall through
           case 13: break;
           case 6:
-            { System.out.println("Red: " + yytext());
+            { return new java_cup.runtime.Symbol(sym.NUM, Integer.valueOf(yytext()));
             }
           // fall through
           case 14: break;
           case 7:
-            { System.out.println("Simbulo ;");
+            { return sym.SEMI;
             }
           // fall through
           case 15: break;
           case 8:
-            { System.out.println("Simbulo RGB");
+            { return sym.RGB;
             }
           // fall through
           case 16: break;
           default:
             zzScanError(ZZ_NO_MATCH);
-        }
-      }
-    }
-  }
-
-  /**
-   * Runs the scanner on input files.
-   *
-   * This is a standalone scanner, it will print any unmatched
-   * text to System.out unchanged.
-   *
-   * @param argv   the command line, contains the filenames to run
-   *               the scanner on.
-   */
-  public static void main(String[] argv) {
-    if (argv.length == 0) {
-      System.out.println("Usage : java Yylex [ --encoding <name> ] <inputfile(s)>");
-    }
-    else {
-      int firstFilePos = 0;
-      String encodingName = "UTF-8";
-      if (argv[0].equals("--encoding")) {
-        firstFilePos = 2;
-        encodingName = argv[1];
-        try {
-          // Side-effect: is encodingName valid?
-          java.nio.charset.Charset.forName(encodingName);
-        } catch (Exception e) {
-          System.out.println("Invalid encoding '" + encodingName + "'");
-          return;
-        }
-      }
-      for (int i = firstFilePos; i < argv.length; i++) {
-        Yylex scanner = null;
-        java.io.FileInputStream stream = null;
-        java.io.Reader reader = null;
-        try {
-          stream = new java.io.FileInputStream(argv[i]);
-          reader = new java.io.InputStreamReader(stream, encodingName);
-          scanner = new Yylex(reader);
-          while ( !scanner.zzAtEOF ) scanner.yylex();
-        }
-        catch (java.io.FileNotFoundException e) {
-          System.out.println("File not found : \""+argv[i]+"\"");
-        }
-        catch (java.io.IOException e) {
-          System.out.println("IO error scanning file \""+argv[i]+"\"");
-          System.out.println(e);
-        }
-        catch (Exception e) {
-          System.out.println("Unexpected exception:");
-          e.printStackTrace();
-        }
-        finally {
-          if (reader != null) {
-            try {
-              reader.close();
-            }
-            catch (java.io.IOException e) {
-              System.out.println("IO error closing file \""+argv[i]+"\"");
-              System.out.println(e);
-            }
-          }
-          if (stream != null) {
-            try {
-              stream.close();
-            }
-            catch (java.io.IOException e) {
-              System.out.println("IO error closing file \""+argv[i]+"\"");
-              System.out.println(e);
-            }
-          }
         }
       }
     }
