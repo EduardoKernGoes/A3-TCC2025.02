@@ -3,33 +3,60 @@ package parser;
 import java.util.*;
 
 parser code {:
-    public static String toHex(int r, int g, int b) {
-        return String.format("#%02X%02X%02X", r, g, b);
-    }
+    public static String toHex(int r, int g, int b) {
+        return String.format("#%02X%02X%02X", r, g, b);
+    }
 :};
 
 terminal RGB, LPAREN, RPAREN, COMMA, SEMI;
 terminal Integer NUM;
+terminal String HEX;
+terminal ERROR;
 
-non terminal String S;       
-non terminal Integer R, G, B; 
-non terminal String RGBVAL;  
+non terminal Object PROGRAM, LIST, CMD;
+non terminal String RGBVAL;
+non terminal Integer R, G, B;
 
-start with S;
+start with PROGRAM;
 
-S ::= RGBVAL:hex_val SEMI
-      {: 
-         System.out.println("HEX: " + hex_val);
-         RESULT = hex_val; 
-      :}
-      ;
+PROGRAM ::= LIST;
+
+LIST ::=
+      LIST CMD
+    | CMD
+    ;
+
+CMD ::=
+      RGBVAL:hex_val SEMI
+      {:
+          System.out.println("HEX: " + hex_val);
+      :}
+    |
+      HEX:hex_val SEMI
+      {:
+          String hex = hex_val.substring(1);
+          int r, g, b;
+
+          if (hex.length() == 3) {
+              r = Integer.parseInt("" + hex.charAt(0) + hex.charAt(0), 16);
+              g = Integer.parseInt("" + hex.charAt(1) + hex.charAt(1), 16);
+              b = Integer.parseInt("" + hex.charAt(2) + hex.charAt(2), 16);
+          } else {
+              r = Integer.parseInt(hex.substring(0, 2), 16);
+              g = Integer.parseInt(hex.substring(2, 4), 16);
+              b = Integer.parseInt(hex.substring(4, 6), 16);
+          }
+
+          System.out.println("RGB: (" + r + ", " + g + ", " + b + ")");
+      :}
+    ;
 
 RGBVAL ::=
-      RGB LPAREN R:r_val COMMA G:g_val COMMA B:b_val RPAREN
-      {:
-         RESULT = toHex(r_val.intValue(), g_val.intValue(), b_val.intValue());
-      :}
-      ;
+    RGB LPAREN R:r_val COMMA G:g_val COMMA B:b_val RPAREN
+    {:
+        RESULT = toHex(r_val.intValue(), g_val.intValue(), b_val.intValue());
+    :}
+    ;
 
 R ::= NUM:val {: RESULT = val; :};
 G ::= NUM:val {: RESULT = val; :};

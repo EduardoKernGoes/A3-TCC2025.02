@@ -4,7 +4,7 @@
 
 
 @SuppressWarnings("fallthrough")
-class Yylex implements java_cup.runtime.Scanner, java_cup.runtime.Scanner {
+class Yylex implements java_cup.runtime.Scanner {
 
   /** This character denotes the end of file. */
   public static final int YYEOF = -1;
@@ -60,11 +60,12 @@ class Yylex implements java_cup.runtime.Scanner, java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\11\0\5\1\22\0\1\1\7\0\1\2\1\3\2\0"+
-    "\1\4\3\0\12\5\1\0\1\6\46\0\1\7\4\0"+
-    "\1\10\12\0\1\11\22\0\1\1\32\0\1\1\u01df\0"+
-    "\1\1\177\0\13\1\35\0\2\1\5\0\1\1\57\0"+
-    "\1\1\240\0\1\1\377\0\u0100\12";
+    "\11\0\5\1\22\0\1\1\2\0\1\2\4\0\1\3"+
+    "\1\4\2\0\1\5\3\0\12\6\1\0\1\7\5\0"+
+    "\6\10\32\0\1\10\1\11\4\10\1\12\12\0\1\13"+
+    "\22\0\1\1\32\0\1\1\u01df\0\1\1\177\0\13\1"+
+    "\35\0\2\1\5\0\1\1\57\0\1\1\240\0\1\1"+
+    "\377\0\u0100\14";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[1536];
@@ -91,11 +92,11 @@ class Yylex implements java_cup.runtime.Scanner, java_cup.runtime.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7"+
-    "\1\1\1\0\1\10";
+    "\1\0\1\1\1\2\1\1\1\3\1\4\1\5\1\6"+
+    "\1\7\1\1\3\0\1\10\1\11\2\0\1\11";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[11];
+    int [] result = new int[18];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -120,11 +121,12 @@ class Yylex implements java_cup.runtime.Scanner, java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\13\0\26\0\13\0\13\0\13\0\41\0\13"+
-    "\0\54\0\67\0\13";
+    "\0\0\0\15\0\32\0\47\0\15\0\15\0\15\0\64"+
+    "\0\15\0\101\0\116\0\133\0\150\0\15\0\165\0\202"+
+    "\0\217\0\15";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[11];
+    int [] result = new int[18];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -147,12 +149,15 @@ class Yylex implements java_cup.runtime.Scanner, java_cup.runtime.Scanner {
   private static final int [] ZZ_TRANS = zzUnpacktrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\2"+
-    "\1\11\15\0\1\3\16\0\1\7\15\0\1\12\11\0"+
-    "\1\13\3\0";
+    "\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11"+
+    "\3\2\1\12\17\0\1\3\21\0\1\13\1\0\2\13"+
+    "\11\0\1\10\20\0\1\14\10\0\1\15\1\0\2\15"+
+    "\14\0\1\16\11\0\1\17\1\0\2\17\11\0\1\20"+
+    "\1\0\2\20\11\0\1\21\1\0\2\21\11\0\1\22"+
+    "\1\0\2\22\3\0";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[66];
+    int [] result = new int[156];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -195,11 +200,11 @@ class Yylex implements java_cup.runtime.Scanner, java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\1\1\3\11\1\1\1\11\1\1\1\0"+
-    "\1\11";
+    "\1\0\1\11\2\1\3\11\1\1\1\11\1\1\3\0"+
+    "\1\11\1\1\2\0\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[11];
+    int [] result = new int[18];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -695,50 +700,58 @@ class Yylex implements java_cup.runtime.Scanner, java_cup.runtime.Scanner {
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
             zzDoEOF();
-          { return new java_cup.runtime.Symbol(sym.EOF); }
+          {     // Retorna o token de EOF direto pelo código 0 (padrão do CUP)
+    return new java_cup.runtime.Symbol(0);
+ }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { System.out.println("ERRO: caractere inválido: " + yytext());
-            }
-          // fall through
-          case 9: break;
-          case 2:
-            { /* ignorar */
+            { System.err.println("ERRO: caractere inválido: " + yytext());
+                        return new java_cup.runtime.Symbol(parser.Sym.ERROR);
             }
           // fall through
           case 10: break;
-          case 3:
-            { return sym.LPAREN;
+          case 2:
+            { /* ignorar espaços */
             }
           // fall through
           case 11: break;
-          case 4:
-            { return sym.RPAREN;
+          case 3:
+            { return new java_cup.runtime.Symbol(parser.Sym.LPAREN);
             }
           // fall through
           case 12: break;
-          case 5:
-            { return sym.COMMA;
+          case 4:
+            { return new java_cup.runtime.Symbol(parser.Sym.RPAREN);
             }
           // fall through
           case 13: break;
-          case 6:
-            { return new java_cup.runtime.Symbol(sym.NUM, Integer.valueOf(yytext()));
+          case 5:
+            { return new java_cup.runtime.Symbol(parser.Sym.COMMA);
             }
           // fall through
           case 14: break;
-          case 7:
-            { return sym.SEMI;
+          case 6:
+            { return new java_cup.runtime.Symbol(parser.Sym.NUM, Integer.valueOf(yytext()));
             }
           // fall through
           case 15: break;
-          case 8:
-            { return sym.RGB;
+          case 7:
+            { return new java_cup.runtime.Symbol(parser.Sym.SEMI);
             }
           // fall through
           case 16: break;
+          case 8:
+            { return new java_cup.runtime.Symbol(parser.Sym.RGB);
+            }
+          // fall through
+          case 17: break;
+          case 9:
+            { return new java_cup.runtime.Symbol(parser.Sym.HEX, yytext());
+            }
+          // fall through
+          case 18: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

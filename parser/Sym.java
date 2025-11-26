@@ -9,13 +9,15 @@ package parser;
 public class Sym {
   /* terminals */
   public static final int NUM = 7;
-  public static final int COMMA = 5;
   public static final int RGB = 2;
-  public static final int RPAREN = 4;
-  public static final int error = 1;
+  public static final int ERROR = 9;
   public static final int SEMI = 6;
-  public static final int LPAREN = 3;
   public static final int EOF = 0;
+  public static final int error = 1;
+  public static final int COMMA = 5;
+  public static final int RPAREN = 4;
+  public static final int HEX = 8;
+  public static final int LPAREN = 3;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -24,7 +26,9 @@ public class Sym {
   "RPAREN",
   "COMMA",
   "SEMI",
-  "NUM"
+  "NUM",
+  "HEX",
+  "ERROR"
   };
 }
 
