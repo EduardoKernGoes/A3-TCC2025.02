@@ -1,23 +1,23 @@
-
-
 %%
 
-%standalone
-%class Lexer
+%class Yylex
 %unicode
+%cup
 %line
 %column
+%implements java_cup.runtime.Scanner 
 
 DIGIT = [0-9]
 NUMBER = {DIGIT}+
 
 %%
 
-"rgb" {System.out.println("Simbulo RGB");}
-"(" {System.out.println("Simbulo (");}
-"," {System.out.println("Simbulo ,");}
-")" {System.out.println("Simbulo )");}
-";" {System.out.println("Simbulo ;");}
-{NUMBER} {System.out.println("Num: " + yytext());}
+"rgb"       { return sym.RGB; }
+"("         { return sym.LPAREN; }
+")"         { return sym.RPAREN; }
+","         { return sym.COMMA; }
+";"         { return sym.SEMI; }
+{NUMBER}    { return new java_cup.runtime.Symbol(sym.NUM, Integer.valueOf(yytext())); }
 
-\s+ {/*IGNORAR */}
+\s+         { /* ignorar */ }
+.           { System.out.println("ERRO: caractere inválido: " + yytext()); }
