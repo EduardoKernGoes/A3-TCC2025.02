@@ -1,63 +1,57 @@
-package parser;
-
-import java.util.*;
+import java_cup.runtime.*;
 
 parser code {:
-    public static String toHex(int r, int g, int b) {
-        return String.format("#%02X%02X%02X", r, g, b);
-    }
-:};
 
-terminal RGB, LPAREN, RPAREN, COMMA, SEMI;
+    private String toHex(int c) {
+        String hex = Integer.toHexString(c).toUpperCase(); 
+    
+        if (hex.length() == 1) {
+            return "0" + hex;
+        } else if (hex.length() == 0) {
+            return "00";
+        }
+        return hex;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Lexer lexer = new Lexer(new java.io.FileReader(args[0]));
+        parser p = new parser(lexer);
+        Object result = p.parse().value;
+        System.out.println(result);
+    }
+:}
+
+terminal RGB, LPAREN, VIR, RPAREN, PVIR, JV;
 terminal Integer NUM;
 terminal String HEX;
-terminal ERROR;
 
-non terminal Object PROGRAM, LIST, CMD;
-non terminal String RGBVAL;
-non terminal Integer R, G, B;
+non terminal String expr, color, expr_list;
 
-start with PROGRAM;
+expr_list ::= expr:e
+                {: RESULT = e; :}
+            |
+              expr_list:l expr:e
+                {: RESULT = l + "\n" + e; :};
 
-PROGRAM ::= LIST;
+expr ::= RGB color:c PVIR
+        {: RESULT = "#" + c + ";"; :}
+        |
+         JV HEX:h PVIR
+        {:
+            String hex = h.substring(0);
+            int r, g, b;
 
-LIST ::=
-      LIST CMD
-    | CMD
-    ;
+            r = Integer.parseInt(hex.substring(0, 2), 16);
+            g = Integer.parseInt(hex.substring(2, 4), 16);
+            b = Integer.parseInt(hex.substring(4, 6), 16);
 
-CMD ::=
-      RGBVAL:hex_val SEMI
-      {:
-          System.out.println("HEX: " + hex_val);
-      :}
-    |
-      HEX:hex_val SEMI
-      {:
-          String hex = hex_val.substring(1);
-          int r, g, b;
+            RESULT = "rgb(" + r + ", " + g + ", " + b + ");"; 
+        :};
+color ::= LPAREN NUM:n1 VIR NUM:n2 VIR NUM:n3 RPAREN
+        {:  
+            String hexR = toHex(n1.intValue());
+            String hexG = toHex(n2.intValue());
+            String hexB = toHex(n3.intValue());
 
-          if (hex.length() == 3) {
-              r = Integer.parseInt("" + hex.charAt(0) + hex.charAt(0), 16);
-              g = Integer.parseInt("" + hex.charAt(1) + hex.charAt(1), 16);
-              b = Integer.parseInt("" + hex.charAt(2) + hex.charAt(2), 16);
-          } else {
-              r = Integer.parseInt(hex.substring(0, 2), 16);
-              g = Integer.parseInt(hex.substring(2, 4), 16);
-              b = Integer.parseInt(hex.substring(4, 6), 16);
-          }
-
-          System.out.println("RGB: (" + r + ", " + g + ", " + b + ")");
-      :}
-    ;
-
-RGBVAL ::=
-    RGB LPAREN R:r_val COMMA G:g_val COMMA B:b_val RPAREN
-    {:
-        RESULT = toHex(r_val.intValue(), g_val.intValue(), b_val.intValue());
-    :}
-    ;
-
-R ::= NUM:val {: RESULT = val; :};
-G ::= NUM:val {: RESULT = val; :};
-B ::= NUM:val {: RESULT = val; :};
+            RESULT = hexR + hexG + hexB;
+        :};
