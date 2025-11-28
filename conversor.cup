@@ -1,0 +1,57 @@
+import java_cup.runtime.*;
+
+parser code {:
+
+    private String toHex(int c) {
+        String hex = Integer.toHexString(c).toUpperCase(); 
+    
+        if (hex.length() == 1) {
+            return "0" + hex;
+        } else if (hex.length() == 0) {
+            return "00";
+        }
+        return hex;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Lexer lexer = new Lexer(new java.io.FileReader(args[0]));
+        parser p = new parser(lexer);
+        Object result = p.parse().value;
+        System.out.println(result);
+    }
+:}
+
+terminal RGB, LPAREN, VIR, RPAREN, PVIR, JV;
+terminal Integer NUM;
+terminal String HEX;
+
+non terminal String expr, color, expr_list;
+
+expr_list ::= expr:e
+                {: RESULT = e; :}
+            |
+              expr_list:l expr:e
+                {: RESULT = l + "\n" + e; :};
+
+expr ::= RGB color:c PVIR
+        {: RESULT = "#" + c + ";"; :}
+        |
+         JV HEX:h PVIR
+        {:
+            String hex = h.substring(0);
+            int r, g, b;
+
+            r = Integer.parseInt(hex.substring(0, 2), 16);
+            g = Integer.parseInt(hex.substring(2, 4), 16);
+            b = Integer.parseInt(hex.substring(4, 6), 16);
+
+            RESULT = "rgb(" + r + ", " + g + ", " + b + ");"; 
+        :};
+color ::= LPAREN NUM:n1 VIR NUM:n2 VIR NUM:n3 RPAREN
+        {:  
+            String hexR = toHex(n1.intValue());
+            String hexG = toHex(n2.intValue());
+            String hexB = toHex(n3.intValue());
+
+            RESULT = hexR + hexG + hexB;
+        :};
